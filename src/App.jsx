@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as XLSX from "xlsx";
 
 const ISO = [
   { id: "old",  label: "Slechte isolatie",   sub: "Voor 1980",           w: 120 },
@@ -199,6 +200,42 @@ export default function App() {
 
   const activeGroups = groups.filter(g => g.length > 0);
   const gmeta = groupMeta.length >= activeGroups.length ? groupMeta : [...groupMeta, ...Array(activeGroups.length - groupMeta.length).fill(null).map(makeGroup)];
+
+
+  function exportToExcel() {
+    const wb = XLSX.utils.book_new();
+    const allRows = [["Buitenunit", "Omschrijving", "Spec", "Detail", "Aantal"]];
+
+    activeGroups.forEach((grp, gi) => {
+      const grs = grp.map(id => rooms.find(r => r.id === id)).filter(Boolean);
+      if (!grs.length) return;
+      const { ou } = vg(grs, overdim, overdimOU);
+      const meta = gmeta[gi] || makeGroup();
+      const fuseDistNum = Number(meta.fuseDist) || 0;
+      const label = `Buitenunit ${gi + 1}`;
+
+      allRows.push([label, "Buitenunit", ou ? ou.lbl : "—", ou ? ou.id : "—", "1 st"]);
+      allRows.push([label, "Automaat zekeringkast", ou ? ou.breaker : "—", "", "1 st"]);
+      allRows.push([label, "Voedingskabel zekeringkast → buitenunit", ou ? ou.ouCable : "—", "", fuseDistNum > 0 ? `${fuseDistNum} m` : "—"]);
+      allRows.push([label, "Montage", meta.mountType === "wall" ? "Muurbeugel" : "Voetmodel", "", "1 st"]);
+
+      grs.forEach(r => {
+        const u = IU[r.ii];
+        const dist = Number(r.pipeDist) || 0;
+        const rolls = dist > 0 ? Math.ceil(dist / 20) : 1;
+        const ruimte = `${label} — ${r.name}`;
+        allRows.push([ruimte, "Binnenunit", u.lbl, u.id, "1 st"]);
+        allRows.push([ruimte, `Koelleiding ${u.pipeLiq} + ${u.pipeGas}`, "Rol 20 m", dist > 0 ? `${dist} m → ${rolls} rol${rolls > 1 ? "len" : ""}` : "afstand?", `${rolls} rol${rolls > 1 ? "len" : ""}`]);
+        allRows.push([ruimte, "Verbindingskabel buiten → binnen", u.cable, "", dist > 0 ? `${dist} m` : "—"]);
+        if (r.condensePump) allRows.push([ruimte, "Condenspomp", "1 st", "", ""]);
+      });
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(allRows);
+    ws["!cols"] = [{ wch: 28 }, { wch: 42 }, { wch: 22 }, { wch: 28 }, { wch: 14 }];
+    XLSX.utils.book_append_sheet(wb, ws, "Materiaallijst");
+    XLSX.writeFile(wb, "Materiaallijst_Hivolta.xlsx");
+  }
 
   const inp = (extra = {}) => ({ border: `1px solid ${C.border}`, borderRadius: 6, padding: "4px 8px", fontSize: 13, fontWeight: 500, color: C.textPrimary, background: C.surfaceHigh, outline: "none", textAlign: "right", ...extra });
 
@@ -457,7 +494,12 @@ export default function App() {
 
         {/* Materiaallijst */}
         <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 24, marginTop: 24 }}>
-          <SectionHead>Materiaallijst</SectionHead>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+            <SectionHead>Materiaallijst</SectionHead>
+            <button onClick={exportToExcel} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 7, border: `1.5px solid ${C.accent}`, background: C.blueLt, color: C.accent, cursor: "pointer", fontSize: 11, fontWeight: 700, letterSpacing: "0.04em" }}>
+              ⬇ Download Excel
+            </button>
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {activeGroups.map((grp, gi) => {
               const grs = grp.map(id => rooms.find(r => r.id === id)).filter(Boolean);
