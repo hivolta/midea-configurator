@@ -87,7 +87,7 @@ function makeGroup() { return { mountType: "wall", fuseDistRaw: "", fuseDist: ""
 function Btn({ active, onClick, children, small }) {
   return (
     <button onClick={onClick} style={{
-      padding: small ? "3px 10px" : "3px 12px", borderRadius: 6, cursor: "pointer", fontSize: 11,
+      padding: small ? "3px 10px" : "3px 12px", borderRadius: 6, cursor: "pointer", fontSize: 15,
       border: active ? `1.5px solid ${C.accent}` : `1px solid ${C.border}`,
       background: active ? C.blueLt : C.surfaceHigh,
       color: active ? C.accent : C.textSecondary, fontWeight: active ? 600 : 400,
@@ -96,27 +96,27 @@ function Btn({ active, onClick, children, small }) {
 }
 
 function SecLabel({ children }) {
-  return <div style={{ fontSize: 9, fontWeight: 700, color: C.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>{children}</div>;
+  return <div style={{ fontSize: 12, fontWeight: 700, color: C.accent, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>{children}</div>;
 }
 
 function SectionHead({ children }) {
-  return <div style={{ fontSize: 10, fontWeight: 700, color: C.accent, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>{children}</div>;
+  return <div style={{ fontSize: 13, fontWeight: 700, color: C.accent, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 12 }}>{children}</div>;
 }
 
 function MatTable({ rows }) {
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15 }}>
       <thead>
         <tr>{["Omschrijving", "Spec", "Detail", "Aantal"].map((h, i) => (
-          <th key={h} style={{ textAlign: i === 3 ? "right" : "left", padding: "4px 8px", fontSize: 9, fontWeight: 700, color: C.textMuted, borderBottom: `1px solid ${C.border}`, background: C.surfaceHigh, letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+          <th key={h} style={{ textAlign: i === 3 ? "right" : "left", padding: "4px 8px", fontSize: 12, fontWeight: 700, color: C.textMuted, borderBottom: `1px solid ${C.border}`, background: C.surfaceHigh, letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
         ))}</tr>
       </thead>
       <tbody>
         {rows.map((row, i) => (
           <tr key={i} style={{ borderBottom: `1px solid ${C.border}` }}>
             <td style={{ padding: "6px 8px", color: C.textPrimary, fontWeight: 500 }}>{row[0]}</td>
-            <td style={{ padding: "6px 8px", color: C.accent, fontFamily: "monospace", fontSize: 10 }}>{row[1]}</td>
-            <td style={{ padding: "6px 8px", color: C.textMuted, fontSize: 10 }}>{row[2]}</td>
+            <td style={{ padding: "6px 8px", color: C.accent, fontFamily: "monospace", fontSize: 13 }}>{row[1]}</td>
+            <td style={{ padding: "6px 8px", color: C.textMuted, fontSize: 13 }}>{row[2]}</td>
             <td style={{ padding: "6px 8px", color: C.textPrimary, textAlign: "right", fontWeight: 700 }}>{row[3]}</td>
           </tr>
         ))}
@@ -237,19 +237,19 @@ export default function App() {
     XLSX.writeFile(wb, "Materiaallijst_Hivolta.xlsx");
   }
 
-  const inp = (extra = {}) => ({ border: `1px solid ${C.border}`, borderRadius: 6, padding: "4px 8px", fontSize: 13, fontWeight: 500, color: C.textPrimary, background: C.surfaceHigh, outline: "none", textAlign: "right", ...extra });
+  const inp = (extra = {}) => ({ border: `1px solid ${C.border}`, borderRadius: 6, padding: "4px 8px", fontSize: 18, fontWeight: 500, color: C.textPrimary, background: C.surfaceHigh, outline: "none", textAlign: "right", ...extra });
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", fontSize: 13, color: C.textPrimary, background: C.bg, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "system-ui, sans-serif", fontSize: 18, color: C.textPrimary, background: C.bg, minHeight: "100vh" }}>
 
       {/* Header */}
       <div style={{ background: C.surface, borderBottom: `1px solid ${C.border}`, padding: "13px 20px", display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{ width: 30, height: 30, borderRadius: 7, background: C.accent, color: C.accentTxt, fontSize: 14, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>M</div>
-        <span style={{ fontSize: 13, fontWeight: 700, color: C.white, letterSpacing: "-0.01em" }}>Midea warmtepomp configurator</span>
-        <div style={{ marginLeft: "auto", fontSize: 10, color: C.textMuted }}>by hivolta</div>
+        <div style={{ width: 30, height: 30, borderRadius: 7, background: C.accent, color: C.accentTxt, fontSize: 19, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>M</div>
+        <span style={{ fontSize: 18, fontWeight: 700, color: C.white, letterSpacing: "-0.01em" }}>Midea warmtepomp configurator</span>
+        <div style={{ marginLeft: "auto", fontSize: 13, color: C.textMuted }}>by hivolta</div>
       </div>
 
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "24px 16px 64px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 16px 64px" }}>
 
         {/* Isolatie */}
         <SectionHead>Isolatiegraad gebouw</SectionHead>
@@ -258,9 +258,9 @@ export default function App() {
             const sel = iso.id === l.id;
             return (
               <button key={l.id} onClick={() => setIsoLive(l)} style={{ background: sel ? C.blueLt : C.surface, border: sel ? `1.5px solid ${C.accent}` : `1px solid ${C.border}`, borderRadius: 10, padding: "10px 12px", cursor: "pointer", textAlign: "left", width: "100%" }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: sel ? C.accent : C.textPrimary }}>{l.label}</div>
-                <div style={{ fontSize: 10, color: C.textSecondary, marginTop: 2 }}>{l.sub}</div>
-                <span style={{ display: "inline-block", fontSize: 10, padding: "2px 6px", borderRadius: 999, marginTop: 5, background: sel ? C.accent : C.surfaceHigh, color: sel ? C.accentTxt : C.textSecondary }}>{l.w} W/m²</span>
+                <div style={{ fontSize: 16, fontWeight: 600, color: sel ? C.accent : C.textPrimary }}>{l.label}</div>
+                <div style={{ fontSize: 13, color: C.textSecondary, marginTop: 2 }}>{l.sub}</div>
+                <span style={{ display: "inline-block", fontSize: 13, padding: "2px 6px", borderRadius: 999, marginTop: 5, background: sel ? C.accent : C.surfaceHigh, color: sel ? C.accentTxt : C.textSecondary }}>{l.w} W/m²</span>
               </button>
             );
           })}
@@ -274,16 +274,16 @@ export default function App() {
             { title: "BUITENUNIT", label: "Buitenunit mag groter zijn dan binnenunit", val: overdimOURaw, setVal: setOverdimOURaw, commit: v => setOverdimOU(v), cur: overdimOU },
           ].map(({ title, label, val, setVal, commit, cur }) => (
             <div key={title} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 14px", flex: 1, minWidth: 220 }}>
-              <div style={{ fontSize: 9, fontWeight: 700, color: C.accent, letterSpacing: "0.1em", marginBottom: 8 }}>{title}</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: C.accent, letterSpacing: "0.1em", marginBottom: 8 }}>{title}</div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                <span style={{ fontSize: 11, color: C.textPrimary, flex: 1 }}>{label}</span>
+                <span style={{ fontSize: 15, color: C.textPrimary, flex: 1 }}>{label}</span>
                 <input type="number" min={0} max={50} value={val}
                   onChange={e => { setVal(e.target.value); const v = parseInt(e.target.value); if (Number.isFinite(v) && v >= 0 && v <= 50) commit(v); }}
                   onBlur={e => { const v = parseInt(e.target.value); const s = Number.isFinite(v) && v >= 0 && v <= 50 ? v : cur; commit(s); setVal(String(s)); }}
-                  style={{ ...inp({ width: 50, fontSize: 14 }) }} />
-                <span style={{ fontSize: 11, color: C.textSecondary }}>%</span>
+                  style={{ ...inp({ width: 50, fontSize: 19 }) }} />
+                <span style={{ fontSize: 15, color: C.textSecondary }}>%</span>
               </div>
-              <div style={{ fontSize: 10, color: C.textMuted }}>Bij {cur}% en 4 kW: min. <strong style={{ color: C.textPrimary }}>{(4 * (1 - cur / 100)).toFixed(1)} kW</strong> buitenunit</div>
+              <div style={{ fontSize: 13, color: C.textMuted }}>Bij {cur}% en 4 kW: min. <strong style={{ color: C.textPrimary }}>{(4 * (1 - cur / 100)).toFixed(1)} kW</strong> buitenunit</div>
             </div>
           ))}
         </div>
@@ -309,37 +309,37 @@ export default function App() {
                     {[0,1,2].map(i => <span key={i} style={{ display: "block", width: 10, height: 1.5, background: C.borderHigh, borderRadius: 1 }} />)}
                   </div>
                   <input value={r.name} onChange={e => updateRoom(r.id, { name: e.target.value })}
-                    style={{ flex: 1, border: "none", background: "transparent", fontSize: 13, fontWeight: 600, color: C.textPrimary, outline: "none", minWidth: 0 }} />
-                  {rooms.length > 1 && <button onClick={() => removeRoom(r.id)} style={{ background: "none", border: "none", cursor: "pointer", color: C.textMuted, fontSize: 16, lineHeight: 1 }}>×</button>}
+                    style={{ flex: 1, border: "none", background: "transparent", fontSize: 18, fontWeight: 600, color: C.textPrimary, outline: "none", minWidth: 0 }} />
+                  {rooms.length > 1 && <button onClick={() => removeRoom(r.id)} style={{ background: "none", border: "none", cursor: "pointer", color: C.textMuted, fontSize: 21, lineHeight: 1 }}>×</button>}
                 </div>
 
                 {/* m² */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <span style={{ fontSize: 11, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Oppervlakte</span>
+                  <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Oppervlakte</span>
                   <input type="number" min={1} max={500} value={r.sqmRaw}
                     onChange={e => handleSqm(r.id, e.target.value)}
                     onBlur={() => { const v = parseInt(r.sqmRaw); const s = Number.isFinite(v) && v > 0 ? v : r.sqm; updateRoom(r.id, { sqm: s, sqmRaw: String(s) }); }}
                     style={{ ...inp({ width: 60 }) }} />
-                  <span style={{ fontSize: 11, color: C.textSecondary }}>m²</span>
+                  <span style={{ fontSize: 15, color: C.textSecondary }}>m²</span>
                 </div>
 
-                <div style={{ fontSize: 10, color: C.textMuted, marginBottom: 10, paddingLeft: 84 }}>
+                <div style={{ fontSize: 13, color: C.textMuted, marginBottom: 10, paddingLeft: 84 }}>
                   {kw.toFixed(1)} kW nodig · met {overdim}% marge: {(kw * (1 - overdim / 100)).toFixed(1)} kW
                 </div>
 
                 {/* Afstand buitenunit */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9 }}>
-                  <span style={{ fontSize: 11, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Afstand buiten</span>
+                  <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Afstand buiten</span>
                   <input type="number" min={0} value={r.pipeDistRaw}
                     onChange={e => handlePipe(r.id, e.target.value)}
                     onBlur={() => { const v = parseInt(r.pipeDistRaw); if (!Number.isFinite(v) || v < 0) updateRoom(r.id, { pipeDistRaw: r.pipeDist !== "" ? String(r.pipeDist) : "" }); }}
                     style={{ ...inp({ width: 60 }) }} />
-                  <span style={{ fontSize: 11, color: C.textSecondary }}>m</span>
+                  <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
                 </div>
 
                 {/* Condenspomp */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 11 }}>
-                  <span style={{ fontSize: 11, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Condenspomp</span>
+                  <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Condenspomp</span>
                   <div style={{ display: "flex", gap: 5 }}>
                     <Btn active={r.condensePump === true}  onClick={() => updateRoom(r.id, { condensePump: true  })}>Ja</Btn>
                     <Btn active={r.condensePump === false} onClick={() => updateRoom(r.id, { condensePump: false })}>Nee</Btn>
@@ -348,44 +348,44 @@ export default function App() {
 
                 {/* IU suggestion */}
                 <div style={{ background: C.surfaceHigh, borderRadius: 8, padding: "7px 9px", display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 32, height: 32, borderRadius: 5, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 9, fontWeight: 800, color: C.accentTxt, textAlign: "center", lineHeight: 1.3 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 5, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, fontWeight: 800, color: C.accentTxt, textAlign: "center", lineHeight: 1.3 }}>
                     {u.kw}<br />kW
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 11, fontWeight: 600, color: C.textPrimary, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{u.lbl}</div>
-                    <div style={{ fontSize: 9, color: C.textMuted, marginTop: 1, fontFamily: "monospace" }}>{u.id}</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: C.textPrimary, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{u.lbl}</div>
+                    <div style={{ fontSize: 12, color: C.textMuted, marginTop: 1, fontFamily: "monospace" }}>{u.id}</div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
                     {[["↑", () => setRooms(p => p.map(x => x.id === r.id && x.ii < IU.length-1 ? {...x, ii: x.ii+1} : x)), r.ii >= IU.length-1],
                       ["↓", () => setRooms(p => p.map(x => x.id === r.id && x.ii > 0 ? {...x, ii: x.ii-1} : x)), r.ii <= 0]
                     ].map(([lbl, fn, dis], i) => (
-                      <button key={i} onClick={fn} disabled={dis} style={{ width: 22, height: 22, borderRadius: 4, border: `1px solid ${C.border}`, background: C.surface, cursor: dis ? "not-allowed" : "pointer", fontSize: 11, color: C.textSecondary, display: "flex", alignItems: "center", justifyContent: "center", opacity: dis ? 0.25 : 1 }}>{lbl}</button>
+                      <button key={i} onClick={fn} disabled={dis} style={{ width: 22, height: 22, borderRadius: 4, border: `1px solid ${C.border}`, background: C.surface, cursor: dis ? "not-allowed" : "pointer", fontSize: 15, color: C.textSecondary, display: "flex", alignItems: "center", justifyContent: "center", opacity: dis ? 0.25 : 1 }}>{lbl}</button>
                     ))}
                     <button onClick={() => setRooms(p => p.map(x => x.id === r.id ? {...x, ii: x.di} : x))}
-                      style={{ visibility: isDefault ? "hidden" : "visible", fontSize: 9, padding: "2px 5px", borderRadius: 4, border: `1px solid ${C.border}`, background: C.surface, cursor: "pointer", color: C.textSecondary }}>reset</button>
+                      style={{ visibility: isDefault ? "hidden" : "visible", fontSize: 12, padding: "2px 5px", borderRadius: 4, border: `1px solid ${C.border}`, background: C.surface, cursor: "pointer", color: C.textSecondary }}>reset</button>
                   </div>
                 </div>
 
                 {activeGroups.length > 1 && gi >= 0 && (
                   <div style={{ marginTop: 8, textAlign: "right" }}>
-                    <span style={{ fontSize: 10, padding: "2px 7px", borderRadius: 999, background: C.blueLt, color: C.accent, border: `1px solid ${C.accentDark}` }}>Buitenunit {gi + 1}</span>
+                    <span style={{ fontSize: 13, padding: "2px 7px", borderRadius: 999, background: C.blueLt, color: C.accent, border: `1px solid ${C.accentDark}` }}>Buitenunit {gi + 1}</span>
                   </div>
                 )}
               </div>
             );
           })}
 
-          <button onClick={addRoom} style={{ background: "transparent", border: `1px dashed ${C.borderHigh}`, borderRadius: 12, padding: 14, cursor: "pointer", color: C.textMuted, fontSize: 12, minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-            <span style={{ fontSize: 20, lineHeight: 1 }}>+</span> Ruimte toevoegen
+          <button onClick={addRoom} style={{ background: "transparent", border: `1px dashed ${C.borderHigh}`, borderRadius: 12, padding: 14, cursor: "pointer", color: C.textMuted, fontSize: 16, minHeight: 80, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+            <span style={{ fontSize: 26, lineHeight: 1 }}>+</span> Ruimte toevoegen
           </button>
         </div>
 
         {rooms.length > 1 && (
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28, flexWrap: "wrap" }}>
-            <span style={{ fontSize: 11, color: C.textMuted }}>Sleep ruimtes samen voor 1 buitenunit.</span>
+            <span style={{ fontSize: 15, color: C.textMuted }}>Sleep ruimtes samen voor 1 buitenunit.</span>
             {activeGroups.length < rooms.length && (
               <button onClick={() => { setGroups(g => [...g, []]); setGroupMeta(g => [...g, makeGroup()]); }}
-                style={{ fontSize: 11, padding: "4px 10px", borderRadius: 6, border: `1px dashed ${C.borderHigh}`, background: "transparent", cursor: "pointer", color: C.textSecondary }}>
+                style={{ fontSize: 15, padding: "4px 10px", borderRadius: 6, border: `1px dashed ${C.borderHigh}`, background: "transparent", cursor: "pointer", color: C.textSecondary }}>
                 + Extra buitenunit
               </button>
             )}
@@ -409,47 +409,47 @@ export default function App() {
                   <div style={{ height: 3, background: hasErr ? "#f08080" : C.accent }} />
                   <div style={{ padding: 14 }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                      <span style={{ fontSize: 14, fontWeight: 700 }}>Buitenunit {gi + 1}</span>
-                      <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 999, background: hasErr ? C.red : C.green, border: `1px solid ${hasErr ? C.redBrd : C.greenBrd}`, color: hasErr ? C.redTxt : C.greenTxt, fontWeight: 700 }}>{hasErr ? "Fout" : "Compatibel"}</span>
+                      <span style={{ fontSize: 19, fontWeight: 700 }}>Buitenunit {gi + 1}</span>
+                      <span style={{ fontSize: 13, padding: "2px 8px", borderRadius: 999, background: hasErr ? C.red : C.green, border: `1px solid ${hasErr ? C.redBrd : C.greenBrd}`, color: hasErr ? C.redTxt : C.greenTxt, fontWeight: 700 }}>{hasErr ? "Fout" : "Compatibel"}</span>
                     </div>
 
                     {ou && !hasErr ? (
                       <>
                         <div style={{ background: C.surfaceHigh, borderRadius: 8, padding: "9px 11px", marginBottom: 10 }}>
-                          <div style={{ fontSize: 13, fontWeight: 700, color: C.textPrimary, marginBottom: 2 }}>{ou.lbl}</div>
-                          <div style={{ fontSize: 10, color: C.textMuted, fontFamily: "monospace" }}>{ou.id}</div>
+                          <div style={{ fontSize: 18, fontWeight: 700, color: C.textPrimary, marginBottom: 2 }}>{ou.lbl}</div>
+                          <div style={{ fontSize: 13, color: C.textMuted, fontFamily: "monospace" }}>{ou.id}</div>
                         </div>
                         <div style={{ marginBottom: 12 }}>
                           <div style={{ height: 4, background: C.border, borderRadius: 2, overflow: "hidden", marginBottom: 3 }}>
                             <div style={{ height: "100%", width: `${pct}%`, borderRadius: 2, background: pct > 100 ? "#f08080" : C.accent, transition: "width .3s" }} />
                           </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: C.textMuted }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: C.textMuted }}>
                             <span>Vermogensbezetting</span><span>{tk.toFixed(1)} / {ou.kw} kW</span>
                           </div>
                         </div>
                       </>
                     ) : (
                       <div style={{ background: C.red, border: `1px solid ${C.redBrd}`, borderRadius: 8, padding: "9px 11px", marginBottom: 12 }}>
-                        {errs.map((e, i) => <div key={i} style={{ display: "flex", gap: 6, fontSize: 11, color: C.redTxt, ...(i > 0 ? { marginTop: 4 } : {}) }}><span>✕</span><span>{e}</span></div>)}
+                        {errs.map((e, i) => <div key={i} style={{ display: "flex", gap: 6, fontSize: 15, color: C.redTxt, ...(i > 0 ? { marginTop: 4 } : {}) }}><span>✕</span><span>{e}</span></div>)}
                       </div>
                     )}
 
                     <div style={{ background: C.surfaceHigh, border: `1px solid ${C.border}`, borderRadius: 8, padding: "10px 11px", marginBottom: 12 }}>
                       <SecLabel>Installatie buitenunit</SecLabel>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                        <span style={{ fontSize: 11, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Montage</span>
+                        <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Montage</span>
                         <div style={{ display: "flex", gap: 6 }}>
                           <Btn active={meta.mountType === "wall"} onClick={() => updateMeta(gi, { mountType: "wall" })}>Muurbeugel</Btn>
                           <Btn active={meta.mountType === "floor"} onClick={() => updateMeta(gi, { mountType: "floor" })}>Voetmodel</Btn>
                         </div>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ fontSize: 11, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Zekeringkast</span>
+                        <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Zekeringkast</span>
                         <input type="number" min={0} max={999} value={meta.fuseDistRaw}
                           onChange={e => handleFuse(gi, e.target.value)}
                           onBlur={() => { const v = parseInt(meta.fuseDistRaw); if (!Number.isFinite(v) || v < 0) updateMeta(gi, { fuseDistRaw: meta.fuseDist !== "" ? String(meta.fuseDist) : "" }); }}
                           placeholder="afstand" style={{ ...inp({ width: 65 }) }} />
-                        <span style={{ fontSize: 11, color: C.textSecondary }}>m</span>
+                        <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
                       </div>
                     </div>
 
@@ -460,17 +460,17 @@ export default function App() {
                         return (
                           <div key={r.id} style={{ marginBottom: 8, padding: "8px 10px", background: C.surfaceHigh, borderRadius: 8, border: `1px solid ${C.border}` }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                              <div style={{ width: 26, height: 26, borderRadius: 4, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 8, fontWeight: 800, color: C.accentTxt, textAlign: "center", lineHeight: 1.3 }}>{u.kw}<br />kW</div>
+                              <div style={{ width: 26, height: 26, borderRadius: 4, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 11, fontWeight: 800, color: C.accentTxt, textAlign: "center", lineHeight: 1.3 }}>{u.kw}<br />kW</div>
                               <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ fontSize: 10, fontWeight: 600, color: C.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{u.lbl}</div>
-                                <div style={{ fontSize: 9, color: C.textMuted, fontFamily: "monospace" }}>{u.id}</div>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{u.lbl}</div>
+                                <div style={{ fontSize: 12, color: C.textMuted, fontFamily: "monospace" }}>{u.id}</div>
                               </div>
-                              <div style={{ fontSize: 10, fontWeight: 700, color: C.accent }}>{u.kw} kW</div>
+                              <div style={{ fontSize: 13, fontWeight: 700, color: C.accent }}>{u.kw} kW</div>
                             </div>
-                            <div style={{ fontSize: 10, color: C.textSecondary, marginBottom: 5 }}>{r.name} · {r.sqm} m²</div>
+                            <div style={{ fontSize: 13, color: C.textSecondary, marginBottom: 5 }}>{r.name} · {r.sqm} m²</div>
                             <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-                              {r.pipeDist !== "" && <span style={{ fontSize: 10, padding: "2px 7px", borderRadius: 999, background: C.surface, border: `1px solid ${C.border}`, color: C.textPrimary }}>Leiding: {r.pipeDist} m</span>}
-                              <span style={{ fontSize: 10, padding: "2px 7px", borderRadius: 999, background: r.condensePump ? C.amber : C.surface, border: `1px solid ${r.condensePump ? C.amberBrd : C.border}`, color: r.condensePump ? C.amberTxt : C.textMuted }}>
+                              {r.pipeDist !== "" && <span style={{ fontSize: 13, padding: "2px 7px", borderRadius: 999, background: C.surface, border: `1px solid ${C.border}`, color: C.textPrimary }}>Leiding: {r.pipeDist} m</span>}
+                              <span style={{ fontSize: 13, padding: "2px 7px", borderRadius: 999, background: r.condensePump ? C.amber : C.surface, border: `1px solid ${r.condensePump ? C.amberBrd : C.border}`, color: r.condensePump ? C.amberTxt : C.textMuted }}>
                                 Condenspomp: {r.condensePump ? "Ja" : "Nee"}
                               </span>
                             </div>
@@ -481,8 +481,8 @@ export default function App() {
 
                     {(meta.fuseDist !== "") && (
                       <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 8, marginTop: 4, display: "flex", gap: 5, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 999, background: C.blueLt, color: C.accent, border: `1px solid ${C.accentDark}` }}>Kabel zekeringkast: {meta.fuseDist} m</span>
-                        <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 999, background: C.surfaceHigh, color: C.textSecondary, border: `1px solid ${C.border}` }}>{meta.mountType === "wall" ? "Muurbeugel" : "Voetmodel"}</span>
+                        <span style={{ fontSize: 13, padding: "2px 8px", borderRadius: 999, background: C.blueLt, color: C.accent, border: `1px solid ${C.accentDark}` }}>Kabel zekeringkast: {meta.fuseDist} m</span>
+                        <span style={{ fontSize: 13, padding: "2px 8px", borderRadius: 999, background: C.surfaceHigh, color: C.textSecondary, border: `1px solid ${C.border}` }}>{meta.mountType === "wall" ? "Muurbeugel" : "Voetmodel"}</span>
                       </div>
                     )}
                   </div>
@@ -496,7 +496,7 @@ export default function App() {
         <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 24, marginTop: 24 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
             <SectionHead>Materiaallijst</SectionHead>
-            <button onClick={exportToExcel} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 7, border: `1.5px solid ${C.accent}`, background: C.blueLt, color: C.accent, cursor: "pointer", fontSize: 11, fontWeight: 700, letterSpacing: "0.04em" }}>
+            <button onClick={exportToExcel} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 7, border: `1.5px solid ${C.accent}`, background: C.blueLt, color: C.accent, cursor: "pointer", fontSize: 15, fontWeight: 700, letterSpacing: "0.04em" }}>
               ⬇ Download Excel
             </button>
           </div>
@@ -511,7 +511,7 @@ export default function App() {
               return (
                 <div key={gi} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden" }}>
                   <div style={{ background: C.accent, padding: "9px 14px" }}>
-                    <span style={{ fontSize: 12, fontWeight: 800, color: C.accentTxt }}>Buitenunit {gi + 1} — {ou ? ou.lbl : "geen unit"}</span>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: C.accentTxt }}>Buitenunit {gi + 1} — {ou ? ou.lbl : "geen unit"}</span>
                   </div>
                   <div style={{ padding: "12px 14px" }}>
                     <SecLabel>Buitenunit</SecLabel>

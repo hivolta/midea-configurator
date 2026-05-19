@@ -1,0 +1,8 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { font-size: clamp(13px, 1.1vw + 8px, 20px); }
+body { margin: 0; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
