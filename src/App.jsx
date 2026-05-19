@@ -346,7 +346,7 @@ export default function App() {
         {rooms.length > 1 && (
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 28, flexWrap: "wrap" }}>
             <span style={{ fontSize: 11, color: C.textMuted }}>Sleep ruimtes samen voor 1 buitenunit.</span>
-            {activeGroups.length < Math.min(rooms.length, 3) && (
+            {activeGroups.length < rooms.length && (
               <button onClick={() => { setGroups(g => [...g, []]); setGroupMeta(g => [...g, makeGroup()]); }}
                 style={{ fontSize: 11, padding: "4px 10px", borderRadius: 6, border: `1px dashed ${C.borderHigh}`, background: "transparent", cursor: "pointer", color: C.textSecondary }}>
                 + Extra buitenunit
