@@ -80,9 +80,9 @@ function vg(grs, overdim = 15, ouOverdim = 15) {
 let nextId = 1;
 function makeRoom(name, w, od = 15) {
   const idx = sidx(20, w, od);
-  return { id: nextId++, name, sqm: 20, sqmRaw: "20", ii: idx, di: idx, pipeDist: "", pipeDistRaw: "", condensePump: false };
+  return { id: nextId++, name, sqm: 20, sqmRaw: "20", ii: idx, di: idx, pipeDist: "", pipeDistRaw: "", condensePump: false, kabelgootKleur: "wit", kabelgootMeter: "", kabelgootMeterRaw: "" };
 }
-function makeGroup() { return { mountType: "wall", fuseDistRaw: "", fuseDist: "" }; }
+function makeGroup() { return { mountType: "wall", fuseDistRaw: "", fuseDist: "", kabelgootKleur: "wit", kabelgootMeter: "", kabelgootMeterRaw: "" }; }
 
 function Btn({ active, onClick, children, small }) {
   return (
@@ -218,6 +218,7 @@ export default function App() {
       allRows.push([label, "Automaat zekeringkast", ou ? ou.breaker : "—", "", "1 st"]);
       allRows.push([label, "Voedingskabel zekeringkast → buitenunit", ou ? ou.ouCable : "—", "", fuseDistNum > 0 ? `${fuseDistNum} m` : "—"]);
       allRows.push([label, "Montage", meta.mountType === "wall" ? "Muurbeugel" : "Voetmodel", "", "1 st"]);
+      if (meta.kabelgootMeter !== "") allRows.push([label, "Kabelgoot buitenunit", meta.kabelgootKleur.charAt(0).toUpperCase() + meta.kabelgootKleur.slice(1), "", `${meta.kabelgootMeter} m`]);
 
       grs.forEach(r => {
         const u = IU[r.ii];
@@ -228,6 +229,7 @@ export default function App() {
         allRows.push([ruimte, `Koelleiding ${u.pipeLiq} + ${u.pipeGas}`, "Rol 20 m", dist > 0 ? `${dist} m → ${rolls} rol${rolls > 1 ? "len" : ""}` : "afstand?", `${rolls} rol${rolls > 1 ? "len" : ""}`]);
         allRows.push([ruimte, "Verbindingskabel buiten → binnen", u.cable, "", dist > 0 ? `${dist} m` : "—"]);
         if (r.condensePump) allRows.push([ruimte, "Condenspomp", "1 st", "", ""]);
+        if (r.kabelgootMeter !== "") allRows.push([ruimte, "Kabelgoot binnenunit", r.kabelgootKleur.charAt(0).toUpperCase() + r.kabelgootKleur.slice(1), "", `${r.kabelgootMeter} m`]);
       });
     });
 
@@ -346,6 +348,28 @@ export default function App() {
                   </div>
                 </div>
 
+
+                {/* Kabelgoot binnenunit */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9 }}>
+                  <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Kabelgoot</span>
+                  <div style={{ display: "flex", gap: 4 }}>
+                    {["wit","grijs","zwart"].map(k => (
+                      <button key={k} onClick={() => updateRoom(r.id, { kabelgootKleur: k })}
+                        style={{ padding: "3px 9px", borderRadius: 5, fontSize: 13, cursor: "pointer", fontWeight: r.kabelgootKleur === k ? 700 : 400,
+                          border: r.kabelgootKleur === k ? `1.5px solid ${C.accent}` : `1px solid ${C.border}`,
+                          background: r.kabelgootKleur === k ? C.blueLt : C.surfaceHigh,
+                          color: r.kabelgootKleur === k ? C.accent : C.textSecondary }}>
+                        {k.charAt(0).toUpperCase() + k.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                  <input type="number" min={0} value={r.kabelgootMeterRaw}
+                    onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateRoom(r.id, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : r.kabelgootMeter }); }}
+                    onBlur={() => { const v = parseInt(r.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateRoom(r.id, { kabelgootMeterRaw: r.kabelgootMeter !== "" ? String(r.kabelgootMeter) : "" }); }}
+                    placeholder="m" style={{ ...inp({ width: 60 }) }} />
+                  <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                </div>
+
                 {/* IU suggestion */}
                 <div style={{ background: C.surfaceHigh, borderRadius: 8, padding: "7px 9px", display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{ width: 32, height: 32, borderRadius: 5, background: C.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, fontWeight: 800, color: C.accentTxt, textAlign: "center", lineHeight: 1.3 }}>
@@ -451,6 +475,25 @@ export default function App() {
                           placeholder="afstand" style={{ ...inp({ width: 65 }) }} />
                         <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
                       </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+                        <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Kabelgoot</span>
+                        <div style={{ display: "flex", gap: 4 }}>
+                          {["wit","grijs","zwart"].map(k => (
+                            <button key={k} onClick={() => updateMeta(gi, { kabelgootKleur: k })}
+                              style={{ padding: "3px 9px", borderRadius: 5, fontSize: 13, cursor: "pointer", fontWeight: meta.kabelgootKleur === k ? 700 : 400,
+                                border: meta.kabelgootKleur === k ? `1.5px solid ${C.accent}` : `1px solid ${C.border}`,
+                                background: meta.kabelgootKleur === k ? C.blueLt : C.surfaceHigh,
+                                color: meta.kabelgootKleur === k ? C.accent : C.textSecondary }}>
+                              {k.charAt(0).toUpperCase() + k.slice(1)}
+                            </button>
+                          ))}
+                        </div>
+                        <input type="number" min={0} value={meta.kabelgootMeterRaw}
+                          onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateMeta(gi, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : meta.kabelgootMeter }); }}
+                          onBlur={() => { const v = parseInt(meta.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateMeta(gi, { kabelgootMeterRaw: meta.kabelgootMeter !== "" ? String(meta.kabelgootMeter) : "" }); }}
+                          placeholder="m" style={{ ...inp({ width: 60 }) }} />
+                        <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                      </div>
                     </div>
 
                     <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 10 }}>
@@ -520,7 +563,8 @@ export default function App() {
                       ["Automaat zekeringkast", ou ? ou.breaker : "—", "", "1 st"],
                       ["Voedingskabel zekeringkast → buitenunit", ou ? ou.ouCable : "—", "", fuseDistNum > 0 ? `${fuseDistNum} m` : "—"],
                       ["Montage", meta.mountType === "wall" ? "Muurbeugel" : "Voetmodel", "", "1 st"],
-                    ]} />
+                      meta.kabelgootMeter !== "" ? ["Kabelgoot buitenunit", `${meta.kabelgootKleur.charAt(0).toUpperCase() + meta.kabelgootKleur.slice(1)}`, "", `${meta.kabelgootMeter} m`] : null,
+                    ].filter(Boolean)} />
 
                     {grs.map((r, ri) => {
                       const u = IU[r.ii];
@@ -534,6 +578,7 @@ export default function App() {
                             [`Koelleiding ${u.pipeLiq} + ${u.pipeGas}`, "Rol 20 m", dist > 0 ? `${dist} m → ${rolls} rol${rolls > 1 ? "len" : ""}` : "afstand?", `${rolls} rol${rolls > 1 ? "len" : ""}`],
                             ["Verbindingskabel buiten → binnen", u.cable, "", dist > 0 ? `${dist} m` : "—"],
                             r.condensePump ? ["Condenspomp", "1 st", "", ""] : null,
+                            r.kabelgootMeter !== "" ? ["Kabelgoot binnenunit", `${r.kabelgootKleur.charAt(0).toUpperCase() + r.kabelgootKleur.slice(1)}`, "", `${r.kabelgootMeter} m`] : null,
                           ].filter(Boolean)} />
                         </div>
                       );
