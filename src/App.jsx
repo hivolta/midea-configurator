@@ -363,11 +363,13 @@ export default function App() {
                       </button>
                     ))}
                   </div>
-                  <input type="number" min={0} value={r.kabelgootMeterRaw}
-                    onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateRoom(r.id, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : r.kabelgootMeter }); }}
-                    onBlur={() => { const v = parseInt(r.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateRoom(r.id, { kabelgootMeterRaw: r.kabelgootMeter !== "" ? String(r.kabelgootMeter) : "" }); }}
-                    placeholder="m" style={{ ...inp({ width: 60 }) }} />
-                  <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <input type="number" min={0} value={r.kabelgootMeterRaw}
+                      onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateRoom(r.id, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : r.kabelgootMeter }); }}
+                      onBlur={() => { const v = parseInt(r.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateRoom(r.id, { kabelgootMeterRaw: r.kabelgootMeter !== "" ? String(r.kabelgootMeter) : "" }); }}
+                      style={{ ...inp({ width: 64, textAlign: "center" }) }} />
+                    <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                  </div>
                 </div>
 
                 {/* IU suggestion */}
@@ -488,11 +490,13 @@ export default function App() {
                             </button>
                           ))}
                         </div>
-                        <input type="number" min={0} value={meta.kabelgootMeterRaw}
-                          onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateMeta(gi, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : meta.kabelgootMeter }); }}
-                          onBlur={() => { const v = parseInt(meta.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateMeta(gi, { kabelgootMeterRaw: meta.kabelgootMeter !== "" ? String(meta.kabelgootMeter) : "" }); }}
-                          placeholder="m" style={{ ...inp({ width: 60 }) }} />
-                        <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <input type="number" min={0} value={meta.kabelgootMeterRaw}
+                            onChange={e => { const raw = e.target.value; const num = parseInt(raw); updateMeta(gi, { kabelgootMeterRaw: raw, kabelgootMeter: Number.isFinite(num) && num >= 0 ? num : meta.kabelgootMeter }); }}
+                            onBlur={() => { const v = parseInt(meta.kabelgootMeterRaw); if (!Number.isFinite(v) || v < 0) updateMeta(gi, { kabelgootMeterRaw: meta.kabelgootMeter !== "" ? String(meta.kabelgootMeter) : "" }); }}
+                            style={{ ...inp({ width: 64, textAlign: "center" }) }} />
+                          <span style={{ fontSize: 15, color: C.textSecondary }}>m</span>
+                        </div>
                       </div>
                     </div>
 
