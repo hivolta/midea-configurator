@@ -292,7 +292,7 @@ export default function App() {
 
         {/* Ruimtes */}
         <SectionHead>Ruimtes</SectionHead>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 10, marginBottom: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 10, marginBottom: 10 }}>
           {rooms.map(r => {
             const gi = groups.findIndex(g => g.includes(r.id));
             const kw = ckw(r.sqm, iso.w);
@@ -350,7 +350,7 @@ export default function App() {
 
 
                 {/* Kabelgoot binnenunit */}
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9, flexWrap: "wrap" }}>
                   <span style={{ fontSize: 15, color: C.textSecondary, minWidth: 76, flexShrink: 0 }}>Kabelgoot</span>
                   <div style={{ display: "flex", gap: 4 }}>
                     {["wit","grijs","zwart"].map(k => (
