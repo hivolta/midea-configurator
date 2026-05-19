@@ -280,7 +280,7 @@ export default function App() {
                 <input type="number" min={0} max={50} value={val}
                   onChange={e => { setVal(e.target.value); const v = parseInt(e.target.value); if (Number.isFinite(v) && v >= 0 && v <= 50) commit(v); }}
                   onBlur={e => { const v = parseInt(e.target.value); const s = Number.isFinite(v) && v >= 0 && v <= 50 ? v : cur; commit(s); setVal(String(s)); }}
-                  style={{ ...inp({ width: 50, fontSize: 19 }) }} />
+                  style={{ ...inp({ width: 72, fontSize: 18, textAlign: 'center', padding: '5px 6px' }) }} />
                 <span style={{ fontSize: 15, color: C.textSecondary }}>%</span>
               </div>
               <div style={{ fontSize: 13, color: C.textMuted }}>Bij {cur}% en 4 kW: min. <strong style={{ color: C.textPrimary }}>{(4 * (1 - cur / 100)).toFixed(1)} kW</strong> buitenunit</div>

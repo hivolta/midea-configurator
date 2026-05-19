@@ -2,7 +2,12 @@
 html { font-size: clamp(13px, 1.1vw + 8px, 20px); }
 body { margin: 0; }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  opacity: 1;
+/* Spinner pijltjes netjes houden */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
